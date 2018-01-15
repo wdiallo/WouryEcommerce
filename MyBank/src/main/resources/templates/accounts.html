@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorator="template1">
+	<head>
+		<meta charset="utf-8"/>
+		<title>My Bank</title>
+	</head>
+	<body>
+		<div layout:fragment="content">
+			<div class="col-md-6">
+				<div class="panel panel-primary">
+					<div class="panel-heading">Account Consultation</div>
+					<div class="panel-body">
+						<form th:action="@{/consultAccount}" method="get">
+							<div>
+								<label> Account code: </label>
+								<input type="text" name="codeAc" th:value="${codeAc}"/>
+								<button type="submit" class="btn btn-primary">Ok</button>
+							</div>				
+						</form>
+						<div class="text-danger" th:if="${exception}" th:text="${exception.message}"></div>
+					</div>
+				</div>
+				
+				<div class="panel panel-primary" th:if="${account}">
+					<div class="panel-heading">Account Informations</div>
+					<div class="panel-body">
+						<div>
+							<label>Customer:</label>
+							<label th:text="${account.customer_ac.nom_cli}"></label>
+						</div>
+						
+						<div>
+							<label>Code:</label>
+							<label th:text="${account.code_ac}"></label>
+						</div>
+						<div>
+							<label>Amount:</label>
+							<label th:text="${account.amount_ac}"></label>
+						</div>
+						
+						<div>
+							<label>Create date:</label>
+							<label th:text="${account.dateCreate_ac}"></label>
+						</div>
+						
+						<div>
+							<label>Account Type:</label>
+							<label th:text="${account.class.simpleName}"></label>
+						</div>
+						
+						<div th:if="${account.class.simpleName=='CurrentAccount'}">
+							<label>Overdraft:</label>
+							<label th:text="${account.overdraft}"></label>
+						</div>
+						
+						<div th:if="${account.class.simpleName=='SavingAccount'}">
+							<label>Bank Rate:</label>
+							<label th:text="${account.rateBank}"></label>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="panel panel-primary" th:if="${account}">
+					<div class="panel-heading">Account Operations</div>
+					<div class="panel-body">
+						
+					</div>
+				</div>
+				<div class="panel panel-primary" th:if="${account}">
+					<div class="panel-heading">List of Operations</div>
+					<div class="panel-body">
+						<table class="table table-striped">
+							<tr>
+								<th>Num</th><th>Type</th><th>Date</th><th>Montant</th>
+							</tr>
+							<tr th:each="o:${listsOps}">
+								<td th:text="${o.number_op}"></td>
+								<td th:text="${o.class.simpleName}"></td>
+								<td th:text="${o.date_op}"></td>
+								<td th:text="${o.amount}"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
