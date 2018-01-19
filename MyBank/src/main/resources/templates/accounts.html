@@ -68,7 +68,31 @@
 				<div class="panel panel-primary" th:if="${account}">
 					<div class="panel-heading">Account Operations</div>
 					<div class="panel-body">
-						
+						<form th:action="@{/saveOperation}" method="post">
+							<div>
+								<label>Account</label>
+								<input type="hidden" name="codeAc" th:value="${codeAc}"/>
+								<label th:text="${codeAc}"></label>
+							</div>
+							<div>
+								<input type="radio" name="typeOp" value="dep" checked="checked" onchange="document.getElementById('forTranfert').style.display='none'" />
+								<label>Deposit</label>
+								<input type="radio" name="typeOp" value="revocat" onchange="document.getElementById('forTranfert').style.display='none'"/>
+								<label>Revocation</label>
+								<input type="radio" name="typeOp" value="transf" onchange="document.getElementById('forTranfert').style.display='block'"/>
+								<label>Transfert</label>
+							</div>
+							<div id="forTranfert" style="display:none">
+								<label>Vers:</label>
+								<input type="text" name="codeAcAdd" />
+							</div>
+							<div>
+								<label>Amount:</label>
+								<input type="text" name="amount" />
+							</div>
+							<div class="text-danger" th:text="${#httpServletRequest.getParameter('error')}"></div>
+							<button type="submit" class="btn btn-primary">Save</button>
+						</form>
 					</div>
 				</div>
 				<div class="panel panel-primary" th:if="${account}">

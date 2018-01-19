@@ -58,6 +58,8 @@ public class BankMetier implements IBankMetier{
 
 	@Override
 	public void transfert(String codeAcSub, String codeAcAdd, double amount) {
+		if(codeAcSub.equals(codeAcAdd))throw new RuntimeException("Operation Invalid. You can't do a tranfert to some account.");
+		
 		this.revocation(codeAcSub, amount);
 		this.deposit(codeAcAdd, amount);
 	}
